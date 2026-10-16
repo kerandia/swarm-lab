@@ -1,0 +1,24 @@
+# Secrets
+.env
+*.env.local
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Runtime state written by the swarm, MASS-lite, the web interface and the builder
+swarm/memory.db
+swarm/memory.db-*
+swarm/mass_runs/
+swarm/builds/
+swarm/public/
+swarm/runs/
+swarm/review/
+*.log
+
+# Fetched at build time (third-party, pinned in fetch-anatomy-skill.sh)
+builder-image/skills/
+
+# OS
+.DS_Store

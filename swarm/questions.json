@@ -1,0 +1,16 @@
+{
+  "train": [
+    {
+      "id": "cbam",
+      "question": "What is the current status of the EU Carbon Border Adjustment Mechanism's definitive phase: which sectors does it cover, what must importers do, and what changed with the 2025 simplification?"
+    },
+    {
+      "id": "hydrogen",
+      "question": "How does the cost of producing green hydrogen in Europe compare with China in 2025-2026, and what are the main drivers of the gap?"
+    },
+    {
+      "id": "heatpumps",
+      "question": "How did European heat pump sales develop in 2024 and 2025, and what reasons do industry bodies give for the trend?"
+    }
+  ]
+}

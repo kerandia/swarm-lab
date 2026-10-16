@@ -1,0 +1,22 @@
+# OpenShell provider profile for Nebius Token Factory.
+#   openshell profile import --file token-factory-profile.yaml
+#   NEBIUS_API_KEY=... openshell provider create --name swarm-builder-nebius \
+#       --type swarm-token-factory --credential NEBIUS_API_KEY
+# The profile is endpointless: policy.yaml binds the provider to exactly
+# POST api.studio.nebius.ai/v1/chat/completions, and the sandbox only ever sees a placeholder.
+id: swarm-token-factory
+display_name: Nebius Token Factory (swarm-lab builder)
+description: Endpoint-bound Token Factory credential for the page-builder sandbox
+category: inference
+inference_capable: true
+
+credentials:
+  - name: api_key
+    description: Nebius Token Factory API key
+    env_vars: [NEBIUS_API_KEY]
+    required: true
+    auth_style: bearer
+    header_name: authorization
+
+discovery:
+  credentials: [api_key]

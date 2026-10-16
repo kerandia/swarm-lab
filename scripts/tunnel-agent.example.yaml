@@ -1,0 +1,33 @@
+# Nebius tunnel agent config for publishing the web interface and result pages.
+# Create the tunnel with `nebius tunnel create --parent-id <project-id> --title "..."`
+# and run the agent on the devlab VM host (host network), for example:
+#   sudo docker run -d --name results-tunnel-agent --restart unless-stopped --network host \
+#     -v /etc/swarm-tunnel/config.yaml:/etc/nebius-tunnel-agent/config.yaml:ro \
+#     cr.eu-north1.nebius.cloud/marketplace/docker/nebius-tunnel-agent:0.3.0 \
+#     -config /etc/nebius-tunnel-agent/config.yaml
+# On a devlab the VM's service account could connect without extra IAM; elsewhere it needs
+# the applicationtunnel.agent role. Each service becomes
+#   https://<service>-<masked-tunnel-id>.tunnel.applications.<region>.nebius.cloud
+
+server_addr: tunnel.applications.eu-west2.nebius.cloud:8443
+server_name: tunnel.applications.eu-west2.nebius.cloud
+tunnel_id: applicationtunnel-<your-tunnel-id>
+iam:
+    domain: api.private-api.eu-west2.nbcloud.net
+    metadata:
+        enabled: true
+        url: http://metadata.nebius.internal/v1/iam/sa/token
+metrics:
+    address: 127.0.0.1
+    port: 29148
+services:
+    # nginx on the host serving swarm/public read-only, bound to localhost only:
+    #   sudo docker run -d --name results-web --restart unless-stopped \
+    #     -p 127.0.0.1:8080:80 -v <path-to>/swarm/public:/usr/share/nginx/html:ro nginx:1.27-alpine
+    - name: results
+      target: 127.0.0.1:8080
+      type: http
+    # The web interface inside the workload container (its bridge IP; check with docker inspect).
+    - name: swarm
+      target: <workload-container-ip>:8090
+      type: http
